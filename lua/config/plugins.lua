@@ -125,7 +125,6 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-calc",
 			"saadparwaiz1/cmp_luasnip",
-			{ "tzachar/cmp-tabnine", build = "./install.sh" },
 			{
 				"David-Kunz/cmp-npm",
 				config = function()

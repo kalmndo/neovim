@@ -1,9 +1,5 @@
 local lspkind = require('lspkind')
 
-local cmp_tabnine_status_ok, tabnine = pcall(require, "cmp_tabnine.config")
-if not cmp_tabnine_status_ok then
-  return
-end
 
 local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
@@ -37,7 +33,6 @@ end
 -- ╰──────────────────────────────────────────────────────────╯
 local source_mapping = {
   npm         = EcoVim.icons.terminal .. 'NPM',
-  cmp_tabnine = EcoVim.icons.light,
   Copilot     = EcoVim.icons.copilot,
   nvim_lsp    = EcoVim.icons.paragraph .. 'LSP',
   buffer      = EcoVim.icons.buffer .. 'BUF',
@@ -141,13 +136,6 @@ cmp.setup {
         local menu = source_mapping[entry.source.name]
         local maxwidth = 50
 
-        if entry.source.name == 'cmp_tabnine' then
-          if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-            menu = menu .. entry.completion_item.data.detail
-          else
-            menu = menu .. 'TBN'
-          end
-        end
 
         vim_item.menu = menu
         vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
@@ -161,7 +149,6 @@ cmp.setup {
     { name = 'nvim_lsp', priority = 9 },
     { name = 'npm', priority = 9 },
     { name = 'copilot', priority = 8 },
-    { name = 'cmp_tabnine', priority = 8, max_num_results = 3 },
     { name = 'luasnip', priority = 7, max_item_count = 8 },
     { name = 'buffer', priority = 7, keyword_length = 5, option = buffer_option, max_item_count = 8 },
     { name = 'nvim_lua', priority = 5 },
@@ -222,15 +209,3 @@ cmp.setup.cmdline(':', {
   })
 })
 
--- ╭──────────────────────────────────────────────────────────╮
--- │ Tabnine Setup                                            │
--- ╰──────────────────────────────────────────────────────────╯
-tabnine:setup({
-  max_lines                = 1000;
-  max_num_results          = 3;
-  sort                     = true;
-  show_prediction_strength = true;
-  run_on_every_keystroke   = true;
-  snipper_placeholder      = '..';
-  ignored_file_types       = {};
-})
